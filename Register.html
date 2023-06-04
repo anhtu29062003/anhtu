@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link rel="stylesheet" href="style.css"> 
+
+    <style>
+        *{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
+    body{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	background: url(pexels-photo-2387793.jpeg) no-repeat;
+	background-size: cover;
+	background-position: center;
+    }
+
+
+a{
+	position: relative;
+	font-size: 1.1em;
+	color: rgb(244, 64, 100);
+	text-decoration: none;
+	font-weight: 500;
+	margin-left: 40px;
+}
+ a::after{
+	content: '';
+	position: absolute;
+	left: 0;
+	bottom: -6px;
+	width: 100%;
+	height: 3px;
+	background: #fff;
+	transform-origin: right;
+	border-radius: 5px;
+	transform: scaleX(0);
+	transition: transform .5s;
+}
+ a:hover::after{
+	transform-origin: left;
+	transform: scaleX(1);
+}
+ .btnLogin-popup{
+	width: 130px;
+	height: 50px;
+	background: transparent;
+	border: 2px solid #fff;
+	outline: none;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 1.1em;
+	color: #fff;
+	font-weight: 500;
+	margin-left: 40px;
+	transition: .3s;
+}
+ .btnLogin-popup:hover{
+	background: #fff;
+	color: #162938;
+}
+
+.active-popup{
+	transform: scale(1);
+}
+.active{
+	height: 520px;
+	transform: scale(1);
+}
+.form-box {
+	width: 100%;
+	padding: 40px;
+}
+.form-box.login{
+	display: none;
+	transform: translateX(-400px);
+	transition: transform .18s ease;
+}
+.active.form-box.login{
+	transition: none;
+}
+.form-box.register{
+    width: 400px;
+	height: 500px;
+	background: transparent;
+	border: 2px solid rgba(255,255,255, .5);
+	border-radius: 20px;
+	backdrop-filter: blur(20px);
+	box-shadow: 0 0 30px rgba(0,0, 0, .5);
+}
+
+.active.form-box.register{
+	transition: transform .18s ease;
+	transform: translateX(0);
+}
+.icon-close{
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 45px;
+	height: 45px;
+	border-bottom-left-radius: 20px;
+	background: #162938;
+	color: #fff;
+	font-size: 2em;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	z-index: 1;
+}
+.form-box h2{
+	font-size: 2em;
+	color: #fff;
+	text-align: center;
+}
+.input-box{
+	position: relative;
+	width: 100%;
+	height: 50px;
+	border-bottom: 2px solid #162938;
+	margin: 30px 0;
+}
+.input-box label{
+	position: absolute;
+	top: 50%;
+	left: 5px;
+	transform: translateY(-50%);
+	font-size: 1em;
+	color: #fff;
+	font-weight: 500;
+	pointer-events: none;
+	transition: .5s;
+}
+.input-box input:focus~label,
+.input-box input:valid~label{
+	top: -5px;
+}
+
+
+.input-box input{
+	width: 100%;
+	height: 100%;
+	background: transparent;
+	border: none;
+	outline: none;
+	font-size: 1em;
+	color: #fff;
+	font-weight: 600;
+	padding: 0 35px 0 5px;
+}
+.input-box .icon{
+	position: absolute;
+	right: 8px;
+	font-size: 1.2em;
+	color: #fff;
+	line-height: 57px;
+}
+.remember-fogot{
+	font-size: .9em;
+	color:#fff;
+	font-weight: 500;
+	margin: -15px 0 15px;
+	display: flex;
+	justify-content: space-between;
+}
+.remember-fogot label input{
+	accent-color: #fff;
+	margin-right: 3px;
+	justify-content: space-between;
+}
+.remember-fogot a{
+	color: #fff;
+	text-decoration: none;
+}
+.remember-fogot a:hover{
+	text-decoration: underline;
+}
+.btn{
+	width: 100%;
+	height: 45px;
+	background: #162938;
+	border: none;
+	outline: none;
+	border-radius: 6px;
+	cursor: pointer;
+	font-size: 1em;
+	color: #fff;
+	font-weight: 500;
+}
+.login-register{
+	font-size: .9em;
+	color: #fff;
+	text-align: center;
+	font-weight: 500;
+	margin: 25px 0 10px;
+}
+.login-register p a{
+	color: #fff;
+	text-decoration: none;
+	font-weight: 600;
+}
+.login-register p a:hover{
+	text-decoration: underline;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  float: left;
+  position: relative;
+}
+
+nav ul li a {
+  display: block;
+  padding: 0 10px;
+  line-height: 40px;
+  color: #333;
+  text-decoration: none;
+}
+
+nav ul li:hover > a {
+  color: #fff;
+  background-color: #333;
+}
+
+nav ul li ul {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  min-width: 200px;
+  display: none;
+}
+
+nav ul li:hover > ul {
+  display: block;
+}
+
+nav ul li ul li {
+  position: relative;
+}
+
+nav ul li ul li a {
+  padding: 10px 20px;
+  line-height: 30px;
+  color: #fff;
+  text-decoration: none;
+  display: block;
+}
+
+nav ul li ul li a:hover {
+  background-color: #666;
+}
+
+  
+    </style>
+</head>
+<body>
+    
+        <div class="form-box register">
+            <h2>Registration</h2>
+            <form action="#">
+                <div class="input-box">
+                    <span class="icon" ><ion-icon name="person-outline"></ion-icon></span>
+                    <input type="text" required>
+                    <label>Username</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon" ><ion-icon name="mail-outline"></ion-icon></span>
+                    <input type="email" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon>
+                    </span>
+                    <input type="password" required>
+                    <label>Password</label>
+                </div>
+                <div class="remember-fogot">
+                    <label><input type="checkbox">
+                    I agree to the terms & conditions</label>
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <div class="login-register">
+                    <p>Already have an account! <a href="Login.html" class="login-link">Login</a> </p>
+                    <br/>
+                    <p><a href="Trang_Chu.html" style="color: Red;">MainPage</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+        
+
+</body>
+<script src="script.js"></script>
+</html>

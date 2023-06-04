@@ -1,0 +1,651 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Untitled Document</title>
+	<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+	<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+	<link rel="stylesheet" href="style.css">
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: 'Poppins', sans-serif;
+		}
+
+		.mage {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;	
+			background-position: center;
+		}
+
+
+		a {
+			position: relative;
+			font-size: 1.1em;
+			color: rgb(244, 64, 100);
+			text-decoration: none;
+			font-weight: 500;
+			margin-left: 40px;
+		}
+
+		a::after {
+			content: '';
+			position: absolute;
+			left: 0;
+			bottom: -6px;
+			width: 100%;
+			height: 3px;
+			background: #fff;
+			transform-origin: right;
+			border-radius: 5px;
+			transform: scaleX(0);
+			transition: transform .5s;
+		}
+
+		a:hover::after {
+			transform-origin: left;
+			transform: scaleX(1);
+		}
+
+		.btnLogin-popup {
+			width: 130px;
+			height: 50px;
+			background: transparent;
+			border: 2px solid #fff;
+			outline: none;
+			border-radius: 6px;
+			cursor: pointer;
+			font-size: 1.1em;
+			color: #fff;
+			font-weight: 500;
+			margin-left: 40px;
+			transition: .3s;
+		}
+
+		.btnLogin-popup:hover {
+			background: #fff;
+			color: #162938;
+		}
+
+		.active-popup {
+			transform: scale(1);
+		}
+
+		.active {
+			height: 520px;
+			transform: scale(1);
+		}
+
+		.form-box {
+			width: 100%;
+			padding: 40px;
+		}
+
+		.form-box.login {
+			display: none;
+			transform: translateX(-400px);
+			transition: transform .18s ease;
+		}
+
+		.active.form-box.login {
+			transition: none;
+		}
+
+		.form-box.register {
+			width: 400px;
+			height: 500px;
+			
+			border: 2px solid rgba(255, 255, 255, .5);
+			border-radius: 20px;
+			backdrop-filter: blur(20px);
+			box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+		}
+
+		.active.form-box.register {
+			transition: transform .18s ease;
+			transform: translateX(0);
+		}
+
+		.icon-close {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 45px;
+			height: 45px;
+			border-bottom-left-radius: 20px;
+			background: #162938;
+			color: #fff;
+			font-size: 2em;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			cursor: pointer;
+			z-index: 1;
+		}
+
+		.form-box h2 {
+			font-size: 2em;
+			color: #fff;
+			text-align: center;
+		}
+
+		.input-box {
+			position: relative;
+			width: 100%;
+			height: 50px;
+			border-bottom: 2px solid #162938;
+			margin: 30px 0;
+		}
+
+		.input-box label {
+			position: absolute;
+			top: 50%;
+			left: 5px;
+			transform: translateY(-50%);
+			font-size: 1em;
+			color: #fff;
+			font-weight: 500;
+			pointer-events: none;
+			transition: .5s;
+		}
+
+		.input-box input:focus~label,
+		.input-box input:valid~label {
+			top: -5px;
+		}
+
+
+		.input-box input {
+			width: 100%;
+			height: 100%;
+			background: transparent;
+			border: none;
+			outline: none;
+			font-size: 1em;
+			color: #fff;
+			font-weight: 600;
+			padding: 0 35px 0 5px;
+		}
+
+		.input-box .icon {
+			position: absolute;
+			right: 8px;
+			font-size: 1.2em;
+			color: #fff;
+			line-height: 57px;
+		}
+
+		.remember-fogot {
+			font-size: .9em;
+			color: #fff;
+			font-weight: 500;
+			margin: -15px 0 15px;
+			display: flex;
+			justify-content: space-between;
+		}
+
+		.remember-fogot label input {
+			accent-color: #fff;
+			margin-right: 3px;
+			justify-content: space-between;
+		}
+
+		.remember-fogot a {
+			color: #fff;
+			text-decoration: none;
+		}
+
+		.remember-fogot a:hover {
+			text-decoration: underline;
+		}
+
+		.btn {
+			width: 100%;
+			height: 45px;
+			background: #162938;
+			border: none;
+			outline: none;
+			border-radius: 6px;
+			cursor: pointer;
+			font-size: 1em;
+			color: #fff;
+			font-weight: 500;
+		}
+
+		.login-register {
+			font-size: .9em;
+			color: #fff;
+			text-align: center;
+			font-weight: 500;
+			margin: 25px 0 10px;
+		}
+
+		.login-register p a {
+			color: #fff;
+			text-decoration: none;
+			font-weight: 600;
+		}
+
+		.login-register p a:hover {
+			text-decoration: underline;
+		}
+
+		nav ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		nav ul li {
+			float: left;
+			position: relative;
+		}
+
+		nav ul li a {
+			display: block;
+			padding: 0 10px;
+			line-height: 40px;
+			color: #333;
+			text-decoration: none;
+		}
+
+		nav ul li:hover>a {
+			color: #fff;
+			background-color: #333;
+		}
+
+		nav ul li ul {
+			position: absolute;
+			top: 40px;
+			left: 0;
+			min-width: 200px;
+			display: none;
+		}
+
+		nav ul li:hover>ul {
+			display: block;
+		}
+
+		nav ul li ul li {
+			position: relative;
+		}
+
+		nav ul li ul li a {
+			padding: 10px 20px;
+			line-height: 30px;
+			color: #fff;
+			text-decoration: none;
+			display: block;
+		}
+
+		nav ul li ul li a:hover {
+			background-color: #666;
+		}
+
+		.header_top {
+			background: black;
+			padding: 20px 50px;
+		}
+
+		.login-menu {
+			position: relative;
+			display: flex;
+			float: right;
+			text-decoration: none;
+			top: -10px;
+		}
+
+		.login-menu a {
+			color: #000000;
+			text-decoration: none;
+			font-weight: bold;
+			margin-left: 5px;
+			font-size: 15px;
+
+		}
+
+		.login-menu:hover .login-dropdown {
+			display: block;
+		}
+
+		.login-dropdown {
+			display: none;
+			position: absolute;
+			top: 100%;
+			left: 0;
+			width: 200px;
+			background-color: white;
+			border: 1px solid gray;
+			padding: 10px;
+			z-index: 1;
+		}
+
+		.login-dropdown ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+
+		.login-dropdown li {
+			margin: 0;
+			padding: 0;
+		}
+
+		.login-dropdown a {
+			display: block;
+			padding: 5px;
+			text-decoration: none;
+			color: black;
+		}
+
+		.login-dropdown a:hover {
+			background-color: gray;
+			color: white;
+		}
+
+
+
+		.imageChange {
+			max-height: 23px;
+		}
+
+		.body {
+			margin: 0;
+			padding: 0;
+		}
+
+		.header {
+			background-color: #333;
+			color: #fff;
+			padding: 10px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+		}
+
+		.header_menu {
+			position: relative;
+			display: flex;
+			float: right;
+			text-decoration: none;
+		}
+
+		.header_menu ul {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+			display: flex;
+
+		}
+
+		.header_menu li {
+			margin-right: 20px;
+			margin-top: 10px;
+			margin-left: 20px;
+
+		}
+
+		.header_menu a {
+			color: #000000;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 15px;
+		}
+
+		.header_menu a:hover {
+			color: #FFFFFF;
+
+		}
+
+		.header_menu ul ul {
+			display: none;
+			position: absolute;
+
+		}
+
+		.header_menu ul li:hover>ul {
+			display: inherit;
+		}
+
+		.SPNoiBat ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			display: flex;
+		}
+
+		.SPNoiBat li {
+			margin-left: 20px;
+		}
+
+		.SPNoiBat a {
+			color: #000000;
+			text-decoration: none;
+			font-weight: bold;
+			font-size: 15px;
+
+		}
+
+		.menu {
+			position: relative;
+			display: flex;
+			float: left;
+			text-decoration: none;
+		}
+
+		.menu:hover .login-dropdown {
+			display: block;
+		}
+
+		.no-bullet {
+			list-style-type: none;
+		}
+
+		.footer .box-container {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+
+		.footer .box-container .box {
+			padding: px;
+			flex: 10px;
+			list-style-type: none;
+			margin-left: 38px;
+		}
+
+		.box a {
+			color: #000000;
+			text-decoration: none;
+			margin-left: -38px;
+			font-size: 15px;
+
+		}
+	</style>
+</head>
+
+<body >
+	<div class="header_top">
+		<div class="login-menu">
+			<img src="Image/Hotline.jpg" class="imageChange" alt="Hotline">
+			<li><a href="#" style="color: white">18006226 </a></li>
+			<li><a style="color: white">|</a></li>
+			<li><a href="#" class="login-link" style="color: white">Đăng nhập</a></li>
+			<li><img src="Image/images.png" class="imageChange" alt="DangNhap"></li>
+			<div class="login-dropdown">
+				<ul>
+					<li><a href="Register.html">Đăng ký</a></li>
+					<li><a href="Login.html">Đăng nhập</a></li>
+					<li><a href="#">Ưu đãi hội viên</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<header>
+		<div class="header_menu">
+			<ul>
+				<li><a href="Trang_Chu.html" style="font-size: 25px; margin-top: 15px;color: black;">ARISTIONO</a></li>
+
+				<div class="menu">
+					<li><a href="#" style="color: black;">THƯƠNG HIỆU</a></li>
+					<div class="login-dropdown">
+						<li><a href="thuonghieu1.html">Tin tức Aristino</a></li>
+						<li><a href="thuonghieu1.html">Phong cách Aristino</a></li>
+					</div>
+				</div>
+
+				<div class="menu">
+					<li><a href="#" style="color: black">SẢN PHẨM</a></li>
+					<div class="login-dropdown">
+						<li><a href="polo.html">ÁO</a></li>
+						<li><a href="QuaAu.html">Quần</a></li>
+					</div>
+				</div>
+
+				<div class="menu">
+					<li><a href="#" style="color: black">PHỤ KIỆN</a></li>
+					<div class="login-dropdown">
+						<li><a href="Giay.html">Giày</a></li>
+						<li><a href="#">Cặp da</a></li>
+					</div>
+				</div>
+
+				<div class="menu">
+					<li><a href="#" style="color: black">BỘ SƯU TẬP </a> </li>
+					<div class="login-dropdown">
+						<li><a href="MAN_IN_OFFICITY.html">MAN IN OFFICITY</a></li>
+						<li><a href="Man_In_Regeneration.html">MAN IN REGENERATION</a></li>
+					</div>
+				</div>
+
+				<div class="menu">
+					<li><a href="#" style="color: black">CỬA HÀNG</a></li>
+					<div class="login-dropdown">
+						<li><a href="cuahang1.html">Online Store</a></li>
+						<li><a href="cuahang1.html">Hệ thống cửa hàng</a></li>
+					</div>
+				</div>
+
+				<li><a href="#" style="color: black">3D SHOPPING</a></li>
+
+				<div class="menu">
+					<li><a href="#" style="color: red">OUTLET STORE </a></li>
+					<div class="login-dropdown">
+						<li><a href="#">Áo Sơ Mi</a></li>
+						<li><a href="#">Áo Sơ Mi</a></li>
+					</div>
+				</div>
+
+				<form>
+					<input type="text" placeholder="Tìm kiếm...">
+					<button type="submit">Tìm kiếm</button>
+				</form>
+				<a href="#">
+					<img src="Image/icon-2445095_1280.webp" style="max-height: 45px;margin-left: 50px;"
+						alt="Logo yêu thích sản phẩm">
+				</a>
+				<a href="#"><img src="Image/ThanhToan.png" class="imageChange"
+						style="margin-left: 50px;padding-top: 10px" alt="ThanhToan"></a>
+			</ul>
+		</div>
+	</header>
+	<hr style="position:relative; top:10px; border-color: #383443;">
+
+	<div style="width:50%; margin-left: 200px; margin-top: 300px;">
+		<h2>Registration</h2>
+		<form action="#">
+			<div class="input-box">
+				<span class="icon"><ion-icon name="person-outline"></ion-icon></span>
+				<input type="text" required>
+				<label>Username</label>
+			</div>
+			<div class="input-box">
+				<span class="icon"><ion-icon name="mail-outline"></ion-icon></span>
+				<input type="email" required>
+				<label>Email</label>
+			</div>
+			<div class="input-box">
+				<span class="icon"><ion-icon name="lock-closed-outline"></ion-icon>
+				</span>
+				<input type="password" required>
+				<label>Password</label>
+			</div>
+			<div class="remember-fogot">
+				<label><input type="checkbox">
+					I agree to the terms & conditions</label>
+			</div>
+			<button type="submit" class="btn">Register</button>
+			<div class="login-register">
+				<p>Already have an account! <a href="Login.html" class="login-link">Login</a> </p>
+				<br />
+				<p><a href="Trang_Chu.html" style="color: Red;">MainPage</a></p>
+			</div>
+		</form>
+	</div>
+	</div>
+	</div>
+
+
+	<hr style="position:relative; top:10px; border-color: #383443;">
+
+	<section class="footer">
+		<section class="box-container">
+			<div class="box">
+				<h3>VỀ CHÚNG TÔI</h3>
+				<ul class="no-bullet">
+					<li><a href="#">Câu chuyện thương hiệu </a></li>
+					<li><a href="#">Đôi cánh ước mơ</a></li>
+					<li><a href="#">Tin tức</a></li>
+					<li><a href="#">Tuyển dụng</a></li>
+					<li><a href="#">Liên hệ</a></li>
+				</ul>
+			</div>
+			<div class="box">
+				<h3>CHÍNH SÁCH BẢO HÀNH </h3>
+				<ul class="no-bullet">
+					<li><a href="#">Chính sách đổi hàng </a></li>
+					<li><a href="#">Chính sách bảo hành</a></li>
+					<li><a href="#">Chính sách hội viên</a></li>
+					<li><a href="#">Chính sách giao nhận</a></li>
+					<li><a href="#">Hướng dẫn mua hàng</a></li>
+					<li><a href="#">Chính sách bảo mật</a></li>
+				</ul>
+			</div>
+			<div class="box">
+				<h3>TƯ VẤN</h3>
+				<ul class="no-bullet">
+					<li><a href="#">Tư vấn phong cách </a></li>
+					<li><a href="#">Tư vấn chọn size</a></li>
+					<li><a href="#">Hỏi đáp</a></li>
+				</ul>
+			</div>
+			<div class="box">
+				<h3>THEO DÕI BẢN TIN CỦA CHÚNG TÔI</h3>
+				<ul>
+					<form>
+						<input type="text" placeholder="Nhập email của bạn...">
+						<button type="submit">Đăng ký</button>
+						<p>Kết nối với chúng tôi</p>
+						<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">
+							<img src="Image/youtube_black.jpg" alt="youtube"
+								style="max-width: 40px; margin-left: 80px;">
+						</a>
+					</form>
+				</ul>
+			</div>
+
+		</section>
+	</section>
+	<p style="margin-left: 38px;">CÔNG TY CỔ PHẦN ĐẦU TƯ K&G VIỆT NAM<br><br>Trụ sở chính: Tầng 11 khối A, tòa nhà Sông
+		Đà, đường Phạm Hùng, Phường Mỹ Đình 1 Quận Nam Từ Liêm, Thành phố Hà Nội, Việt Nam<br><br>Giấy chứng nhận Đăng
+		ký Kinh doanh số 0105911105 do Sở Kế hoạch và Đầu tư Thành phố Hà Nội cấp lần đầu ngày 08/06/2012 và sửa đổi lần
+		thứ 10 ngày 05/05/2022</p>
+</body>
+
+</html>
